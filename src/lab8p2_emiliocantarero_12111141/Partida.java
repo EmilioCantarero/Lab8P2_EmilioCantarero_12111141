@@ -1,15 +1,18 @@
 package lab8p2_emiliocantarero_12111141;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
 
-public class Partida {
+public class Partida implements Serializable{
     private String nombre;
     private Date fecha;
     ArrayList<Estrella> estrellas = new ArrayList();
     ArrayList<Jugador> jugadores = new ArrayList();
 
+    private static final long SerialVersionUID = 777L;
+    
     public Partida() {
     }
 
