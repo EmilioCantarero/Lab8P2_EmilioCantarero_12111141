@@ -1,5 +1,6 @@
 package lab8p2_emiliocantarero_12111141;
 
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -47,8 +48,8 @@ public class AdminPartida {
                     while ((temp = (Partida) os.readObject()) != null) {
                         partidas.add(temp);
                     }
-                } catch (ClassNotFoundException ex) {
-                    ex.printStackTrace();
+                } catch (EOFException e) {
+                    
                 }
                 os.close();
                 fs.close();
