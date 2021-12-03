@@ -1,6 +1,7 @@
 package lab8p2_emiliocantarero_12111141;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -16,9 +17,9 @@ public class Partida implements Serializable{
     public Partida() {
     }
 
-    public Partida(String nombre, Date fecha) {
+    public Partida(String nombre) {
         this.nombre = nombre;
-        this.fecha = fecha;
+        this.fecha = new Date();
     }
 
     public String getNombre() {
@@ -58,4 +59,9 @@ public class Partida implements Serializable{
         return nombre;
     }
     
+    public String fecha(){
+        SimpleDateFormat sd=new SimpleDateFormat("dd/MM/yyyy");
+        String fecha=sd.format(this.fecha);
+        return fecha;
+    }
 }
