@@ -6,7 +6,7 @@ import javax.swing.JOptionPane;
 
 public class Estrella implements Serializable{
 
-    private double distancia;
+    private int distancia;
     private String descripcion;
     private String nombre;
 
@@ -14,7 +14,7 @@ public class Estrella implements Serializable{
     public Estrella() {
     }
 
-    public Estrella(double distancia, String descripcion, String nombre) throws IOException {
+    public Estrella(int distancia, String descripcion, String nombre) throws IOException {
 
         this.distancia = distancia;
         this.descripcion = descripcion;
@@ -26,7 +26,7 @@ public class Estrella implements Serializable{
         return distancia;
     }
 
-    public void setDistancia(double distancia) {
+    public void setDistancia(int distancia) {
         this.distancia = distancia;
     }
 

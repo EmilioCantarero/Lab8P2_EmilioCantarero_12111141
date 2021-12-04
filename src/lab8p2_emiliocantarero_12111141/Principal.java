@@ -21,10 +21,12 @@ public class Principal extends javax.swing.JFrame {
         A.escribirArchivo();
          */
         DefaultComboBoxModel m = (DefaultComboBoxModel) cb1.getModel();
+        DefaultTableModel m1=(DefaultTableModel)tablita.getModel();
         m = refrescarModelo(m);
         cb1.setModel(m);
         cb2.setModel(m);
         cb3.setModel(m);
+        p = new Progreso(jLabel14, jLabel12, m1, jLabel15, jLabel13, jProgressBar3);
     }
 
     @SuppressWarnings("unchecked")
@@ -102,7 +104,7 @@ public class Principal extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Double.class, java.lang.Object.class, java.lang.Double.class, java.lang.String.class
+                java.lang.Object.class, java.lang.Double.class, java.lang.Object.class, java.lang.Integer.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -112,8 +114,18 @@ public class Principal extends javax.swing.JFrame {
         jScrollPane4.setViewportView(tablita);
 
         jButton12.setText("Comenzar");
+        jButton12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton12MouseClicked(evt);
+            }
+        });
 
         jButton13.setText("Pausar");
+        jButton13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton13MouseClicked(evt);
+            }
+        });
 
         cbJugadores.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -138,11 +150,11 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel12.setText("jLabel12");
 
-        jLabel13.setText("jLabel13");
+        jLabel13.setText("800");
 
         jLabel14.setText("jLabel14");
 
-        jLabel15.setText("jLabel15");
+        jLabel15.setText("0");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -160,9 +172,11 @@ public class Principal extends javax.swing.JFrame {
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addComponent(jLabel21)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel11))
+                                .addComponent(cbJugadores, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cbEstrellas, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel7Layout.createSequentialGroup()
                                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel7Layout.createSequentialGroup()
@@ -172,7 +186,11 @@ public class Principal extends javax.swing.JFrame {
                                     .addGroup(jPanel7Layout.createSequentialGroup()
                                         .addComponent(jLabel23)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel13)))
+                                        .addComponent(jLabel13))
+                                    .addGroup(jPanel7Layout.createSequentialGroup()
+                                        .addComponent(jLabel21)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jLabel11)))
                                 .addGap(43, 43, 43)
                                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel7Layout.createSequentialGroup()
@@ -182,13 +200,7 @@ public class Principal extends javax.swing.JFrame {
                                     .addGroup(jPanel7Layout.createSequentialGroup()
                                         .addComponent(jLabel25)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel15))))
-                            .addGroup(jPanel7Layout.createSequentialGroup()
-                                .addComponent(cbJugadores, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cbEstrellas, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(jLabel15)))))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -331,7 +343,7 @@ public class Principal extends javax.swing.JFrame {
 
         jLabel5.setText("Distancia");
 
-        tf_Distancia.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+        tf_Distancia.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
         jLabel6.setText("Partida");
 
@@ -598,24 +610,19 @@ public class Principal extends javax.swing.JFrame {
     private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
         // TODO add your handling code here:
         AdminPartida A = new AdminPartida("./partidas.emi");
-        Double distancia=0.0;
+        
         try {
             A.cargarArchivo();
             DefaultComboBoxModel m = (DefaultComboBoxModel) cb2.getModel();
-            if (ta_d.getText().isEmpty()){
-                distancia=null;
-            }else{
-                distancia = Double.parseDouble(tf_Distancia.getText());
-            }
+            String d=tf_Distancia.getText();
             String D = ta_d.getText();
             String n = tf_nE.getText();
-            
-
-            if ((D.isEmpty() || n.isEmpty() || distancia.isNaN()) || verificarEstrella(n)==true) {
+            int dis=Integer.parseInt(d);
+            if ((D.isEmpty() || n.isEmpty() || d.isEmpty()) || verificarEstrella(n) == true) {
                 JOptionPane.showMessageDialog(this, "Alguno de los campos está vacío o el nombre ya estáa en uso");
             } else {
                 try {
-                    Estrella e = new Estrella(distancia, D, n);
+                    Estrella e = new Estrella(dis, D, n);
                     A.getPartidas().get(pos).getEstrellas().add(e);
                     A.escribirArchivo();
                     JOptionPane.showMessageDialog(this, "Estrella creada exitosamente");
@@ -631,7 +638,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void cb3ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb3ItemStateChanged
         // TODO add your handling code here:
-        pos=cb3.getSelectedIndex();
+        pos = cb3.getSelectedIndex();
     }//GEN-LAST:event_cb3ItemStateChanged
 
     private void jButton6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton6MouseClicked
@@ -639,22 +646,21 @@ public class Principal extends javax.swing.JFrame {
         AdminPartida A = new AdminPartida("./partidas.emi");
         try {
             A.cargarArchivo();
-            Double v=0.0;
-            String n=tf_nombre.getText();
-            if (tf_speed.getText().isEmpty()){
-                v=null;
-            }else{
-                v=Double.parseDouble(tf_speed.getText());
+            Double v = 0.0;
+            String n = tf_nombre.getText();
+            if (tf_speed.getText().isEmpty()) {
+                v = null;
+            } else {
+                v = Double.parseDouble(tf_speed.getText());
             }
-            
-            if (v==null||n.isEmpty()){
+
+            if (v == null || n.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Alguno de los campos está vacío");
-            }
-            else{
-                if (verificarJugador(n)==true){
+            } else {
+                if (verificarJugador(n) == true) {
                     JOptionPane.showMessageDialog(this, "Este nombre ya está en uso");
-                }else{
-                    Jugador j=new Jugador(n, v);
+                } else {
+                    Jugador j = new Jugador(n, v);
                     A.getPartidas().get(pos).getJugadores().add(j);
                     A.escribirArchivo();
                     JOptionPane.showMessageDialog(this, "Jugador creado exitosamente");
@@ -668,11 +674,11 @@ public class Principal extends javax.swing.JFrame {
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
         AdminPartida A = new AdminPartida("./partidas.emi");
-        DefaultTableModel m2=(DefaultTableModel)tablita.getModel();
+        DefaultTableModel m2 = (DefaultTableModel) tablita.getModel();
         m2.setRowCount(0);
         tablita.setModel(m2);
-        DefaultComboBoxModel m=(DefaultComboBoxModel)cbJugadores.getModel();
-        DefaultComboBoxModel m1=(DefaultComboBoxModel)cbEstrellas.getModel();
+        DefaultComboBoxModel m = (DefaultComboBoxModel) cbJugadores.getModel();
+        DefaultComboBoxModel m1 = (DefaultComboBoxModel) cbEstrellas.getModel();
         m.removeAllElements();
         m1.removeAllElements();
         try {
@@ -691,8 +697,8 @@ public class Principal extends javax.swing.JFrame {
         Partida.pack();
         Partida.setLocationRelativeTo(this);
         Partida.setVisible(true);
-        
-        
+
+
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton14MouseClicked
@@ -700,30 +706,60 @@ public class Principal extends javax.swing.JFrame {
         AdminPartida A = new AdminPartida("./partidas.emi");
         try {
             A.cargarArchivo();
-            DefaultTableModel mt=(DefaultTableModel)tablita.getModel();
-            String n=A.getPartidas().get(pos).getJugadores().get(pos1).toString();
-            Double v=A.getPartidas().get(pos).getJugadores().get(pos1).getVelocidad();
-            String e=A.getPartidas().get(pos).getEstrellas().get(pos2).toString();
-            Double d=A.getPartidas().get(pos).getEstrellas().get(pos2).getDistancia();
-            String es="En espera";
-            Object []row=new Object[]{n, v, e, d, es};
+            DefaultTableModel mt = (DefaultTableModel) tablita.getModel();
+            String n = A.getPartidas().get(pos).getJugadores().get(pos1).toString();
+            Double v = A.getPartidas().get(pos).getJugadores().get(pos1).getVelocidad();
+            String e = A.getPartidas().get(pos).getEstrellas().get(pos2).toString();
+            int d = (int) A.getPartidas().get(pos).getEstrellas().get(pos2).getDistancia();
+            String es = "En espera";
+            Object[] row = new Object[]{n, v, e, d, es};
             mt.addRow(row);
-            
+
         } catch (IOException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_jButton14MouseClicked
 
     private void cbJugadoresItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbJugadoresItemStateChanged
         // TODO add your handling code here:
-        pos1=cbJugadores.getSelectedIndex();
+        pos1 = cbJugadores.getSelectedIndex();
     }//GEN-LAST:event_cbJugadoresItemStateChanged
 
     private void cbEstrellasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbEstrellasItemStateChanged
         // TODO add your handling code here:
-        pos2=cbEstrellas.getSelectedIndex();
+        pos2 = cbEstrellas.getSelectedIndex();
     }//GEN-LAST:event_cbEstrellasItemStateChanged
+
+    private void jButton12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton12MouseClicked
+        // TODO add your handling code here:
+        AdminPartida A = new AdminPartida("./partidas.emi");
+        DefaultTableModel m=(DefaultTableModel)tablita.getModel();
+        try {
+            A.cargarArchivo();
+            jLabel11.setText(A.getPartidas().get(pos).toString());
+            jLabel12.setText(m.getValueAt(0, 0).toString());
+            
+            jLabel14.setText(m.getValueAt(0, 2).toString());
+            
+            p.start();
+            //jLabel15.setText(String.valueOf(p.getBarra().getValue()));
+            if (p.isFlag()==false){
+                m.setValueAt("Jugando",0, 4);
+            }else{
+                m.setValueAt("Finalizado",0, 4);
+            }
+            
+        } catch (IOException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_jButton12MouseClicked
+
+    private void jButton13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton13MouseClicked
+        // TODO add your handling code here:
+        p.setEmpezar(false);
+    }//GEN-LAST:event_jButton13MouseClicked
 
     public DefaultComboBoxModel refrescarModelo(DefaultComboBoxModel m) throws IOException {
         AdminPartida A = new AdminPartida("./partidas.emi");
@@ -746,6 +782,7 @@ public class Principal extends javax.swing.JFrame {
         //}
         return false;
     }
+
     public boolean verificarEstrella(String x) throws IOException {
         AdminPartida A = new AdminPartida("./partidas.emi");
         A.cargarArchivo();
@@ -758,6 +795,7 @@ public class Principal extends javax.swing.JFrame {
         }
         return false;
     }
+
     public boolean verificarJugador(String x) throws IOException {
         AdminPartida A = new AdminPartida("./partidas.emi");
         A.cargarArchivo();
@@ -864,6 +902,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField tf_speed;
     // End of variables declaration//GEN-END:variables
 int pos;
-int pos1;
-int pos2;
+    int pos1;
+    int pos2;
+    Progreso p;
 }
