@@ -71,10 +71,13 @@ public class Progreso extends Thread{
     @Override
     public void run() {
         int cont=0;
+        flag=true;
         while(vive){
             
             if (empezar){
                 m.setValueAt("Jugando", cont, 4);
+                jugador.setText(String.valueOf(m.getValueAt(cont,0)));
+                Estrella.setText(String.valueOf(m.getValueAt(cont,2)));
                 distanciaT.setText(String.valueOf(m.getValueAt(cont, 3)));
                 int distanciaTo=Integer.valueOf(distanciaT.getText());
                 barra.setMaximum(distanciaTo);
@@ -94,6 +97,7 @@ public class Progreso extends Thread{
                     cont++;
                     if (cont>=m.getRowCount()){
                         vive=false;
+                        flag=false;
                     }
                 }
             }

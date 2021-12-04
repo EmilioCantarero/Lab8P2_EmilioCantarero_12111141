@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class Principal extends javax.swing.JFrame {
-
+    
     public Principal() throws IOException {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -21,14 +21,14 @@ public class Principal extends javax.swing.JFrame {
         A.escribirArchivo();
          */
         DefaultComboBoxModel m = (DefaultComboBoxModel) cb1.getModel();
-        DefaultTableModel m1=(DefaultTableModel)tablita.getModel();
+        DefaultTableModel m1 = (DefaultTableModel) tablita.getModel();
         m = refrescarModelo(m);
         cb1.setModel(m);
         cb2.setModel(m);
         cb3.setModel(m);
         p = new Progreso(jLabel14, jLabel12, m1, jLabel15, jLabel13, jProgressBar3);
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -529,7 +529,7 @@ public class Principal extends javax.swing.JFrame {
             DefaultComboBoxModel m = new DefaultComboBoxModel();
             String n = JOptionPane.showInputDialog("Ingrese el nuevo nombre");
             if (n == null) {
-
+                
             } else if (verificarPartida(n) == true) {
                 JOptionPane.showMessageDialog(this, "El nombre de esa partida ya esta en uso");
             } else {
@@ -614,10 +614,10 @@ public class Principal extends javax.swing.JFrame {
         try {
             A.cargarArchivo();
             DefaultComboBoxModel m = (DefaultComboBoxModel) cb2.getModel();
-            String d=tf_Distancia.getText();
+            String d = tf_Distancia.getText();
             String D = ta_d.getText();
             String n = tf_nE.getText();
-            int dis=Integer.parseInt(d);
+            int dis = Integer.parseInt(d);
             if ((D.isEmpty() || n.isEmpty() || d.isEmpty()) || verificarEstrella(n) == true) {
                 JOptionPane.showMessageDialog(this, "Alguno de los campos está vacío o el nombre ya estáa en uso");
             } else {
@@ -653,7 +653,7 @@ public class Principal extends javax.swing.JFrame {
             } else {
                 v = Double.parseDouble(tf_speed.getText());
             }
-
+            
             if (v == null || n.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Alguno de los campos está vacío");
             } else {
@@ -697,7 +697,7 @@ public class Principal extends javax.swing.JFrame {
         Partida.pack();
         Partida.setLocationRelativeTo(this);
         Partida.setVisible(true);
-
+        
 
     }//GEN-LAST:event_jButton1MouseClicked
 
@@ -714,7 +714,7 @@ public class Principal extends javax.swing.JFrame {
             String es = "En espera";
             Object[] row = new Object[]{n, v, e, d, es};
             mt.addRow(row);
-
+            
         } catch (IOException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -734,25 +734,23 @@ public class Principal extends javax.swing.JFrame {
     private void jButton12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton12MouseClicked
         // TODO add your handling code here:
         AdminPartida A = new AdminPartida("./partidas.emi");
-        DefaultTableModel m=(DefaultTableModel)tablita.getModel();
+        DefaultTableModel m1 = (DefaultTableModel) tablita.getModel();
         try {
             A.cargarArchivo();
             jLabel11.setText(A.getPartidas().get(pos).toString());
-            jLabel12.setText(m.getValueAt(0, 0).toString());
-            
-            jLabel14.setText(m.getValueAt(0, 2).toString());
-            
-            p.start();
-            //jLabel15.setText(String.valueOf(p.getBarra().getValue()));
-            if (p.isFlag()==false){
-                m.setValueAt("Jugando",0, 4);
-            }else{
-                m.setValueAt("Finalizado",0, 4);
+            if (!p.isFlag()) {
+                
+                p.start();
+                /*jLabel12.setText(m.getValueAt(0, 0).toString());
+        jLabel14.setText(m.getValueAt(0, 2).toString());*/
+                //jLabel15.setText(String.valueOf(p.getBarra().getValue()));
             }
             
         } catch (IOException ex) {
             Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
         }
+        p.setEmpezar(true);
+        
 
     }//GEN-LAST:event_jButton12MouseClicked
 
@@ -760,7 +758,7 @@ public class Principal extends javax.swing.JFrame {
         // TODO add your handling code here:
         p.setEmpezar(false);
     }//GEN-LAST:event_jButton13MouseClicked
-
+    
     public DefaultComboBoxModel refrescarModelo(DefaultComboBoxModel m) throws IOException {
         AdminPartida A = new AdminPartida("./partidas.emi");
         A.cargarArchivo();
@@ -769,7 +767,7 @@ public class Principal extends javax.swing.JFrame {
         }
         return m;
     }
-
+    
     public boolean verificarPartida(String x) throws IOException {
         AdminPartida A = new AdminPartida("./partidas.emi");
         A.cargarArchivo();
@@ -782,7 +780,7 @@ public class Principal extends javax.swing.JFrame {
         //}
         return false;
     }
-
+    
     public boolean verificarEstrella(String x) throws IOException {
         AdminPartida A = new AdminPartida("./partidas.emi");
         A.cargarArchivo();
@@ -795,7 +793,7 @@ public class Principal extends javax.swing.JFrame {
         }
         return false;
     }
-
+    
     public boolean verificarJugador(String x) throws IOException {
         AdminPartida A = new AdminPartida("./partidas.emi");
         A.cargarArchivo();
