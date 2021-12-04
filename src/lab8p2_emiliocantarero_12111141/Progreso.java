@@ -96,8 +96,8 @@ public class Progreso extends Thread{
                     barra.setValue(0);
                     cont++;
                     if (cont>=m.getRowCount()){
-                        vive=false;
-                        flag=false;
+                        empezar=false;
+                        
                     }
                 }
             }
